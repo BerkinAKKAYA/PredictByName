@@ -15,13 +15,10 @@ function Predict(name)
         fetch(`https://api.${website}.io?name=${name}`)
             .then(event => event.json())
             .then(result => {
-                if (!result || website == "agify" && result.age == null)
-                {
-                    PrintWarning();
-                    return;
-                }
-
                 callback(result);
+
+                if (website == "agify" && result.age == null)
+                    PrintWarning();
 
                 if (IsDataReady())
                     PrintResult();
@@ -32,7 +29,13 @@ function Predict(name)
     {
         document.getElementById("output-fieldset").style.display = "block";
         const output = document.getElementById("output-container");
-        output.innerHTML = `<p><b>No Results Found!</b></p>`;
+        output.innerHTML = `
+            <p style="text-align:center"><b>No Results Found!</b></p>
+            <p style="text-align:justify">
+                Either your input is not valid or
+                there is a problem. Please try again soon!
+            </p>
+        `;
     }
 
     function PrintResult()
