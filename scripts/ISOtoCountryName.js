@@ -1,4 +1,4 @@
-var isoCodes = {
+const ISOCodes = {
     'AF' : 'Afghanistan',
     'AX' : 'Aland Islands',
     'AL' : 'Albania',
@@ -246,4 +246,4 @@ var isoCodes = {
     'ZW' : 'Zimbabwe'
 };
 
-const ISOtoCountryName = code => isoCodes[code];
+const ISOtoCountryName = code => ISOCodes[code];
