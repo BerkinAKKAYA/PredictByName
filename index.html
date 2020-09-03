@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="icon" href="https://berkinakkaya.github.io/img/favicon.png" />
     <link rel="shortcut icon" href="https://berkinakkaya.github.io/img/favicon.png" />
+    <script defer src="./scripts/ISOtoCountryName.js"></script>
+    <script defer src="./scripts/Predict.js"></script>
+    <script defer src="./scripts/Initialize.js"></script>
+    <script defer src="./scripts/Validator.js"></script>
 </head>
 <body>
     <h1>Predict by Name</h1>
@@ -34,9 +38,13 @@
     </footer>
 </body>
 <script>
+    /* INITALIZE THE SUBMIT BUTTON */
+    const nameInput    = document.querySelector("input[type=text]");
+    const submitButton = document.querySelector("input[type=submit]");
+
+    submitButton.addEventListener("click", e => {
+        Predict(nameInput.value);
+        e.preventDefault();
+    });
 </script>
-<script src="./scripts/ISOtoCountryName.js"></script>
-<script src="./scripts/Predict.js"></script>
-<script src="./scripts/Initialize.js"></script>
-<script src="./scripts/Validator.js"></script>
 </html>
