@@ -1,28 +1,27 @@
 function Predict(name)
 {
-    let age = 0;
-    let gender = "";
-    let countries = [];
+    let age, gender, countries;
 
     FetchData("agify",       name, result => { age       = result.age     })
     FetchData("genderize",   name, result => { gender    = result.gender  })
     FetchData("nationalize", name, result => { countries = result.country })
 
-    const IsDataReady = () => (age!=0 && gender!="" && countries.length>0);
-
-    function FetchData(website, name, callback)
+    async function FetchData(website, name, Callback)
     {
-        fetch(`https://api.${website}.io?name=${name}`)
-            .then(event => event.json())
-            .then(result => {
-                callback(result);
+        const response = await fetch(`https://api.${website}.io?name=${name}`);
+        const json = await response.json();
 
-                if (website == "agify" && result.age == null)
-                    PrintWarning();
+        Callback(json);
 
-                if (IsDataReady())
-                    PrintResult();
-            });
+        // If couldn't fetch the age, print warning.
+        if (website == "agify" && !json.age) {
+            PrintWarning();
+        }
+
+        // If there is nothing to fetch
+        if (age && gender && countries) {
+            PrintResult();
+        }
     }
 
     function PrintWarning()
@@ -30,11 +29,8 @@ function Predict(name)
         document.getElementById("output-fieldset").style.display = "block";
         const output = document.getElementById("output-container");
         output.innerHTML = `
-            <p style="text-align:center"><b>No Results Found!</b></p>
-            <p style="text-align:justify">
-                Either your input is not valid or
-                there is a problem. Please try again soon!
-            </p>
+            <p class="error"><b>No Results Found!</b></p>
+            <p class="error">Couldn't guess. Please check the name and try again.</p>
         `;
     }
 
